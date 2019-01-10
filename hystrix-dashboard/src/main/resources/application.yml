@@ -1,0 +1,9 @@
+server:
+  port: 9999
+turbine:
+  appConfig: hello-world-service
+  cluster-name-expression: new String("default")
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.uri}

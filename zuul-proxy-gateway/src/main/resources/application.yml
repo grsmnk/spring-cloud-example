@@ -1,0 +1,22 @@
+server:
+  port: 8763
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.uri}
+    register-with-eureka: true
+    fetch-registry: true
+    eureka-service-url-poll-interval-seconds: 3
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+spring:
+  application:
+    name: zuul-gateway
+ribbon:
+  ConnectTimeout: 10000
+  ReadTimeout: 10000
