@@ -5,13 +5,10 @@ management:
     web:
       exposure:
         include: "*"
-spring:
-  rabbitmq:
-    host: 127.0.0.1
-    port: 5672
-    password: guest
-    username: guest
+greeting: "Hello"
 eureka:
   client:
     serviceUrl:
-      defaultZone: ${eureka.uri}
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+  instance:
+    preferIpAddress: true

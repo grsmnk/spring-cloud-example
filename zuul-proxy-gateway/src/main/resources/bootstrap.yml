@@ -9,10 +9,6 @@ zuul:
       path: /hello-world/**
       serviceId: hello-world-service
       stripPrefix: true
-    auth-server:
-      path: /auth/**
-      stripPrefix: true
-
 ribbon:
   ConnectTimeout: 10000
   ReadTimeout: 10000
