@@ -7,13 +7,6 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     eureka-service-url-poll-interval-seconds: 3
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 60000
 spring:
   application:
     name: zuul-gateway

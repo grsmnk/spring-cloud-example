@@ -1,5 +1,6 @@
 package com.example.hello.world;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,34 +17,34 @@ import org.springframework.web.client.RestTemplate;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-//@SpringBootApplication
-//@EnableEurekaClient
-//@EnableCircuitBreaker
-//@RestController
-//@EnableHystrixDashboard
-//@RibbonClient(name = "hello-world-service")
-//@Slf4j
-//public class HelloWorldServiceApplication {
-//
-//    @LoadBalanced
-//    @Bean
-//    RestTemplate restTemplate() {
-//        return new RestTemplate();
-//    }
-//
-//    @RequestMapping("/hi")
-////    @HystrixCommand(fallbackMethod = "notAvailable")
-//    public String hi() throws UnknownHostException {
-//        log.info("Request on " + InetAddress.getLocalHost().getHostAddress());
-//        String greeting = restTemplate().getForObject("http://hello-service/hello/world", String.class);
-//        return greeting;
-//    }
-//
-//    private String notAvailable() {
-//        return "Hello Service Not available";
-//    }
-//
-//    public static void main(String[] args) {
-//        SpringApplication.run(HelloWorldServiceApplication.class, args);
-//    }
-//}
+@SpringBootApplication
+@EnableEurekaClient
+@EnableCircuitBreaker
+@RestController
+@EnableHystrixDashboard
+@RibbonClient(name = "hello-world-service")
+@Slf4j
+public class HelloWorldServiceApplication {
+
+    @LoadBalanced
+    @Bean
+    RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+
+    @RequestMapping("/hi")
+    @HystrixCommand(fallbackMethod = "notAvailable")
+    public String hi() throws UnknownHostException {
+        log.info("Request on " + InetAddress.getLocalHost().getHostAddress());
+        String greeting = restTemplate().getForObject("http://hello-service/hello/world", String.class);
+        return greeting;
+    }
+
+    private String notAvailable() {
+        return "Hello Service Not available";
+    }
+
+    public static void main(String[] args) {
+        SpringApplication.run(HelloWorldServiceApplication.class, args);
+    }
+}

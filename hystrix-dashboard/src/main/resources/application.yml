@@ -6,4 +6,7 @@ turbine:
 eureka:
   client:
     serviceUrl:
-      defaultZone: ${eureka.uri}
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+
+#  http://localhost:8083/actuator/hystrix.stream
+#  http://localhost:9999/turbine.stream?cluster=default
