@@ -1,0 +1,93 @@
+version: '3.7'
+
+services:
+  eureka:
+    container_name: eureka
+    image: com.hillel/eureka:test
+    ports:
+      - 8761:8761
+    restart: on-failure
+    networks:
+      - test-network
+  zuul:
+    container_name: zuul
+    image: com.hillel/zuul:test
+    ports:
+      - 8066:8066
+    restart: on-failure
+    environment:
+      - EUREKA_URI=http://eureka:8761/eureka
+      - SERVER_PORT=8066
+    networks:
+      - test-network
+    depends_on:
+      - eureka
+  hello-web:
+    container_name: hello-web-1
+    image: com.hillel/hello:test
+    environment:
+      - EUREKA_URI=http://eureka:8761/eureka
+      - SERVER_PORT=8083
+    ports:
+      - 8083:8083
+    restart: on-failure
+    networks:
+      - test-network
+    depends_on:
+      - eureka
+      - zuul
+  hello-web-2:
+    container_name: hello-web-2
+    image: com.hillel/hello:test
+    environment:
+      - EUREKA_URI=http://eureka:8761/eureka
+      - SERVER_PORT=8084
+    ports:
+      - 8084:8084
+    restart: on-failure
+    networks:
+      - test-network
+    depends_on:
+      - eureka
+      - zuul
+  hello-world-1:
+    container_name: hello-world-1
+    image: com.hillel/hello-world:test
+    environment:
+      - EUREKA_URI=http://eureka:8761/eureka
+      - SERVER_PORT=8077
+    ports:
+      - 8077:8077
+    restart: on-failure
+    networks:
+      - test-network
+    depends_on:
+      - eureka
+      - zuul
+  hello-world-2:
+    container_name: hello-world-2
+    image: com.hillel/hello-world:test
+    environment:
+      - EUREKA_URI=http://eureka:8761/eureka
+      - SERVER_PORT=8078
+    ports:
+      - 8078:8078
+    restart: on-failure
+    networks:
+      - test-network
+    depends_on:
+      - eureka
+      - zuul
+  hystrix:
+    container_name: hystrix
+    image: com.hillel/hystrix:test
+    ports:
+      - 9999:9999
+    environment:
+      - EUREKA_URI=http://eureka:8761/eureka
+    restart: on-failure
+    networks:
+      - test-network
+networks:
+  test-network:
+    driver: bridge
